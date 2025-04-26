@@ -1,4 +1,4 @@
-
+<script>
 /* ======================================================================
    CONFIGURAÇÕES BÁSICAS
 ====================================================================== */
@@ -615,4 +615,4 @@ function hideVideoList(){
   currentSelectedVideoLi?.classList.remove('selected-video-item');
   currentSelectedVideoLi=null;
 }
-
+</script>
