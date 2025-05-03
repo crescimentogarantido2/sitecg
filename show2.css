@@ -1,0 +1,143 @@
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* =========================================================
+   LAYOUT GERAL
+========================================================= */
+body{background:#f3f3f3;font-family:Arial,sans-serif}
+.container{
+  width:100%;max-width:600px;max-height:90vh;
+  overflow-y:auto;overflow-x:hidden;
+  margin:20px auto;background:#fff;padding:20px 25px;
+  border-radius:8px;box-shadow:0 3px 12px rgba(0,0,0,.1);
+  text-align:center
+}
+
+/* =========================================================
+   BARRA DE BUSCA
+========================================================= */
+.search-container{width:100%;margin-bottom:25px}
+.search-input-wrapper{position:relative;display:flex;align-items:center;justify-content:center;width:100%}
+.search-icon{
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:28px;height:28px;fill:red;z-index:2;margin-left:8px
+}
+#searchInput{
+  flex:1;font-size:16px;border:none;border-bottom:3px solid transparent;
+  padding:8px 20px 8px 45px;margin-right:10px;
+  border-image:linear-gradient(to right,#e95959,#ebcbc2,#ebcbc2,#e95959)1;
+  transition:.3s
+}
+#searchInput.typing{
+  border-image:linear-gradient(to right,#43ce43,#c3ebc2,#c3ebc2,#43ce43)1
+}
+#searchInput:focus{outline:none}
+
+#searchButton{
+  background:linear-gradient(135deg,#67c1ff,#007bff);color:#fff;
+  border:none;border-radius:20px;font-size:16px;cursor:pointer;
+  padding:8px 20px;box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:transform .3s,box-shadow .3s
+}
+#searchButton:hover:not(.inactive-button){
+  transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)
+}
+.inactive-button{
+  background:#ccc!important;cursor:not-allowed;
+  box-shadow:none!important;transform:none!important
+}
+
+/* =========================================================
+   LOADER  (ícone branco com preenchimento vermelho)
+========================================================= */
+#loading{
+  margin-top:10px;             /* espaço logo abaixo da barra */
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  min-height:140px             /* garante área visível */
+}
+#loading.hidden{display:none!important}
+
+.loader-icon{position:relative;width:72px;margin:0 auto}
+.loader-icon svg{width:100%;height:auto;display:block;fill:#fff}
+.loader-fill{
+  position:absolute;top:0;left:0;width:100%;height:0;overflow:hidden;
+  animation:loadFill 1.2s linear infinite
+}
+.loader-fill svg{fill:#d80027}
+@keyframes loadFill{0%{height:0}100%{height:100%}}
+
+.loader-text{
+  margin-top:8px;text-align:center;color:#d80027;font-weight:bold;
+  animation:blink 1s steps(2,end) infinite
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* =========================================================
+   RESULTADOS – LISTAS, SELEÇÕES, BOTÕES
+========================================================= */
+.results-list{list-style:none;padding:0;margin:0}
+.results-list li{
+  display:flex;align-items:center;gap:15px;margin-bottom:10px;
+  padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;
+  transition:.2s;cursor:pointer;background:#fafafa
+}
+.results-list li:hover{transform:scale(1.01);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.channel-image{width:50px;height:50px;border-radius:50%}
+
+.selected-title{font-style:italic;margin-bottom:12px;display:none;font-size:1.1rem;color:#555}
+.selected-channel,.selected-video{
+  border:2px dashed #888;padding:15px;margin-bottom:15px;
+  word-wrap:break-word;background:#fcfcfc;text-align:center
+}
+.selected-video img{width:auto;height:120px;object-fit:contain;border-radius:4px;margin-bottom:8px}
+
+.action-buttons{display:flex;justify-content:center;gap:15px;margin-top:15px}
+.action-buttons button{
+  border:none;font-size:15px;color:#fff;border-radius:20px;
+  padding:10px 20px;cursor:pointer;transition:.3s;
+  box-shadow:0 2px 6px rgba(0,0,0,.1)
+}
+.action-buttons button:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+#increaseSubscribersBtn{background:linear-gradient(135deg,#6eea92,#28a745)}
+#increaseViewsBtn      {background:linear-gradient(135deg,#55e4ed,#17a2b8)}
+
+.video-list{
+  list-style:none;padding:8px;margin:0 auto;max-height:250px;overflow-y:auto;
+  border:1px solid #e0e0e0;border-radius:8px;background:#fafafa
+}
+.video-list li{
+  display:flex;align-items:center;gap:15px;margin-bottom:10px;
+  padding:10px 12px;border:1px solid #ddd;border-radius:6px;
+  transition:.2s;background:#fff;cursor:pointer
+}
+.video-list li:hover{transform:scale(1.01);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.video-thumbnail{width:80px;height:80px;object-fit:cover;border-radius:4px}
+.selected-video-item{border:2px solid green!important}
+
+.load-more-btn{
+  background:linear-gradient(135deg,#ffda6e,#ffc107);color:#333;border:none;
+  border-radius:20px;font-size:15px;padding:10px 20px;cursor:pointer;
+  margin:10px auto 20px;display:block;transition:.3s
+}
+.load-more-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+
+.copy-link-btn{
+  background:linear-gradient(135deg,#67c1ff,#007bff);color:#fff;border:none;
+  border-radius:20px;font-size:15px;font-weight:bold;cursor:pointer;
+  padding:10px 20px;margin-top:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:.3s
+}
+.copy-link-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+
+.copy-link-info{margin-top:10px;font-size:14px;color:#555;background:#fdf8ec;padding:5px;border-radius:6px;display:inline-block}
+.redirect-count{margin-top:5px;font-size:14px;color:#d35400;font-weight:bold}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+@media(max-width:480px){
+  #searchButton,.action-buttons button,.copy-link-btn,.load-more-btn{
+    font-size:14px;padding:8px 16px
+  }
+  .action-buttons{flex-direction:column;gap:10px}
+}
