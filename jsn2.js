@@ -106,6 +106,62 @@ async function sendToSheets(linkStr){
 }
 
 /* ======================================================================
+   ÍCONES SVG (mantidos do código original)
+====================================================================== */
+const ICONS = {
+  subscribers: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
+         style="width:1em;height:1em;fill:#fff;margin-left:6px;vertical-align:middle">
+      <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z"/>
+    </svg>`,
+  views: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+         style="width:1em;height:1em;fill:#fff;margin-left:6px;vertical-align:middle">
+      <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
+    </svg>`,
+  copy: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+         style="width:1em;height:1em;fill:#fff;margin-left:6px;vertical-align:middle">
+      <path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/>
+    </svg>`
+};
+
+/* ======================================================================
+   ELEMENTOS DO DOM
+====================================================================== */
+const searchInput               = document.getElementById('searchInput');
+const searchButton              = document.getElementById('searchButton');
+const resultsList               = document.getElementById('results');
+const loading                   = document.getElementById('loading');
+
+const selectedChannelContainer  = document.getElementById('selectedChannelContainer');
+const selectedChannelTitle      = document.getElementById('selectedChannelTitle');
+const selectedChannelElement    = document.getElementById('selectedChannel');
+
+const increaseSubscribersBtn    = document.getElementById('increaseSubscribersBtn');
+const increaseViewsBtn          = document.getElementById('increaseViewsBtn');
+
+const videoListContainer        = document.getElementById('videoListContainer');
+const videoResults              = document.getElementById('videoResults');
+const loadMoreVideosBtn         = document.getElementById('loadMoreVideosBtn');
+
+const selectedVideoContainer    = document.getElementById('selectedVideoContainer');
+const selectedVideoTitle        = document.getElementById('selectedVideoTitle');
+const selectedVideoElement      = document.getElementById('selectedVideo');
+
+/* Coloca ícones nos botões principais */
+increaseSubscribersBtn.innerHTML = `IMPULSIONAR INSCRITOS ${ICONS.subscribers}`;
+increaseViewsBtn.innerHTML       = `IMPULSIONAR VISUALIZAÇÕES ${ICONS.views}`;
+
+/* ======================================================================
+   HELPERS GERAIS (mantidos do original)
+====================================================================== */
+const shortenTitleForList     = (t)=> (t.length>35 ? t.slice(0,33)+'...' : t);
+const shortenTitleForSelected = (t)=> (t.length>35 ? t.slice(0,35)+'...' : t);
+const formatLargeNumber       = (n)=> (+n||0).toLocaleString('pt-BR');
+const isYouTubeLink           = (s)=> /youtube\.com|youtu\.be/.test(s);
+
+/* ======================================================================
    PLACEHOLDER PISCANTE
 ====================================================================== */
 let basePlaceholder = 'Busque seu canal';
